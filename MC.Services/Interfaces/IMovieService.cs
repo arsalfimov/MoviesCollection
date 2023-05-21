@@ -1,7 +1,7 @@
 ﻿using MC.Domain;
 using MC.Services.DTOs;
 
-namespace MC.Services.ServicesInterfaces
+namespace MC.Services.Interfaces
 {
     public interface IMovieService
     {

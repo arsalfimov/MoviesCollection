@@ -1,7 +1,7 @@
 ﻿using MC.Domain;
 using MC.PersistanceInterfaces;
 using MC.Services.DTOs;
-using MC.Services.ServicesInterfaces;
+using MC.Services.Interfaces;
 
 
 namespace MC.Services
