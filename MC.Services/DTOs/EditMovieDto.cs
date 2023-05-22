@@ -9,7 +9,7 @@ namespace MC.Services.DTOs
     public class EditMovieDto
     {
         public string Title { get; set; } = null!;
-        public string Director { get; set; } = null!;
-        public double Rate { get; set; }
+        public string Description { get; set; } = null!;
+        public Guid DirectorId { get; set; }
     }
 }

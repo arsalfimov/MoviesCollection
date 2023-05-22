@@ -4,9 +4,16 @@
     {
         public Guid Id { get; set; }
         public string Title { get; set; } = null!;
-        public string Director { get; set; } = null!;
+        public string Description { get; set; }
         public int Year { get; set; }
         public string Genre { get; set; } = null!;
-        public double Rate { get; set; }
+        public byte[] Cover { get; set; }
+
+        public Guid DirectorId { get; set; }
+        public Director Director { get; set; }
+
+        public IEnumerable<MoviesActors> Actors { get; set;}
+        public IEnumerable<MoviesRates> Rates { get; set;}
+
     }
 }

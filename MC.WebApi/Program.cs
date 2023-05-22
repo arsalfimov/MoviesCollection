@@ -93,7 +93,7 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var dbContext = services.GetRequiredService<MovieDbContext>();
-    MovieDbContext.Initialize(dbContext);
+    //MovieDbContext.Initialize(dbContext);
 }
 
 if (!app.Environment.IsDevelopment())
