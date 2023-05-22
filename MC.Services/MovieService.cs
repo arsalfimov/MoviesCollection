@@ -1,7 +1,7 @@
 ﻿using MC.Domain;
 using MC.PersistanceInterfaces;
 using MC.Services.DTOs;
-using MC.Services.ServicesInterfaces;
+using MC.Services.Interfaces;
 
 
 namespace MC.Services
@@ -21,10 +21,11 @@ namespace MC.Services
             {
                 Id = Guid.NewGuid(),
                 Title = movie.Title,
+                Actors = movie.Actors,
+                Description = movie.Description,
                 Director = movie.Director,
                 Year = DateTime.Now.Year,
-                Genre = movie.Director,
-                Rate = movie.Rate
+                Genre = movie.Genre
             };
 
             return await _movieRepository.AddAsync(postMovie);
@@ -55,8 +56,7 @@ namespace MC.Services
             }
 
             existingMovie.Title = movie.Title;
-            existingMovie.Director = movie.Director;
-            existingMovie.Rate = movie.Rate;
+            existingMovie.DirectorId = movie.DirectorId;
 
             try
             {

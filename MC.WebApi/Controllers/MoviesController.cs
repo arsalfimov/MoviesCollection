@@ -1,10 +1,12 @@
 ﻿using MC.Domain;
 using MC.Services.DTOs;
-using MC.Services.ServicesInterfaces;
+using MC.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MC.WebApi.Controllers
 {
+    [Authorize]
     [Route("[controller]/[action]")]
     public class MoviesController : ControllerBase
     {
