@@ -14,7 +14,7 @@ namespace MC.PersistanceServices
 
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Actor> Actors { get; set; }
-        public DbSet<Director> Director { get; set; }
+        public DbSet<Director> Directors { get; set; }
         public DbSet<MoviesActors> MoviesActors { get; set; }
         public DbSet<MoviesRates> MoviesRates { get; set; }
 
@@ -22,10 +22,9 @@ namespace MC.PersistanceServices
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<MoviesActors>().HasKey(a => new { a.ActorId, a.MovieId });
+            modelBuilder.Entity<MoviesActors>().HasKey(a => a.Id);
+            modelBuilder.Entity<MoviesActors>().HasIndex(a => a.Id).IsUnique(true);
             modelBuilder.Entity<MoviesRates>().HasKey(a => new { a.MovieId, a.UserId });
-            //modelBuilder.Entity<IdentityUserLogin<string>>().HasKey(a => a.UserId);
-            //modelBuilder.Entity<IdentityUserRole<string>>().HasKey(a => new { a.UserId, a.RoleId});
-            //modelBuilder.Entity<IdentityUserLogin<string>>().HasKey(a => a.UserId);
         }
 
         //public static void Initialize(MovieDbContext context)

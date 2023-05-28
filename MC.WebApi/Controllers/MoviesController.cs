@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace MC.WebApi.Controllers
 {
     [Authorize]
-    [Route("[controller]/[action]")]
+    [Route("[controller]")]
     public class MoviesController : ControllerBase
     {
-        private readonly IMovieService _movieService;
+        private readonly IMoviesService _movieService;
 
-        public MoviesController(IMovieService movieService)
+        public MoviesController(IMoviesService movieService)
         {
             _movieService = movieService;
         }
@@ -20,59 +20,36 @@ namespace MC.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Movie>>> GetAllMovies()
         {
-            try
-            {
-                var movies = await _movieService.GetAllMoviesAsync();
-                if (movies.Count == 0)
-                {
-                    return NotFound();
-                }
-                return Ok(movies);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
+            var movies = await _movieService.GetAllMoviesAsync();
+            return Ok(movies);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Movie>> GetMovieById(Guid id)
         {
             var movie = await _movieService.GetMovieByIdAsync(id);
-            if (movie == null)
-            {
-                return NotFound();
-            }
             return Ok(movie);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Movie>> AddMovie([FromBody] Movie movie)
+        public async Task<ActionResult<Movie>> AddMovie([FromBody] CreateMovieDto movieDto)
         {
-            var addedMovie = await _movieService.AddMovieAsync(movie);
-            return Ok(addedMovie);
+            var movie = await _movieService.AddMovieAsync(movieDto);
+            return Created($"/movies/{movie.Id}", movie);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateMovie([FromRoute] Guid id, [FromBody] EditMovieDto movieDto)
+        {
+            var movie = await _movieService.UpdateMovieAsync(id, movieDto);
+            return Ok(movie);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMovie(Guid id)
         {
-            try
-            {
-                await _movieService.DeleteMovieAsync(id);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateMovie([FromRoute] Guid id, [FromBody] EditMovieDto movie)
-        {
-
-            var result = await _movieService.UpdateMovieAsync(id, movie);
-            return Ok(result);
+            await _movieService.DeleteMovieAsync(id);
+            return Ok();
         }
     }
 }

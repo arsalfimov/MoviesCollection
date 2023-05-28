@@ -13,57 +13,36 @@ namespace MC.PersistanceServices
             _context = context;
         }
 
+        public async Task<List<Movie>> GetAllAsync()
+        {
+            return await _context.Movies.Include(m => m.Director).ToListAsync();
+        }
+
+        public async Task<Movie> GetByIdAsync(Guid id)
+        {
+            var movie = await _context.Movies.Include(m => m.Director).SingleOrDefaultAsync(m => m.Id.Equals(id));
+            return movie;
+        }
+
         public async Task<Movie> AddAsync(Movie movie)
         {
-            _context.Movies.AddRange(movie);
+            _context.Movies.Add(movie);
+            await _context.SaveChangesAsync();
+            return movie;
+        }
 
-            if (await _context.SaveChangesAsync() >= 1)
-            {
-                return movie;
-            }
-            else
-            {
-                throw new Exception("error");
-            }
+        public async Task<Movie> UpdateAsync(Movie movie)
+        {
+            _context.Movies.Update(movie);
+            await _context.SaveChangesAsync();
+            return movie;
         }
 
         public async Task DeleteAsync(Guid id)
         {
             var movieToDelete = await GetByIdAsync(id);
-
-            if (movieToDelete == null)
-            {
-                throw new ArgumentException($"Movie with id {id} does not exist.");
-            }
-
             _context.Movies.Remove(movieToDelete);
             await _context.SaveChangesAsync();
-        }
-
-        public async Task<List<Movie>> GetAllAsync()
-        {
-            return await _context.Movies.ToListAsync();
-        }
-
-        public async Task<Movie> GetByIdAsync(Guid id)
-        {
-            var movie = await _context.Movies.SingleOrDefaultAsync(m => m.Id.Equals(id));
-            return movie;
-        }
-
-
-        public async Task<Movie> UpdateAsync(Movie movie)
-        {
-            _context.Movies.Update(movie);
-
-            if (await _context.SaveChangesAsync() >= 1)
-            {
-                return movie;
-            }
-            else
-            {
-                throw new Exception("Error updating movie.");
-            }
-        }
+        }  
     }
 }

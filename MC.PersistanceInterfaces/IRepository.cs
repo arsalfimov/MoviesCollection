@@ -1,5 +1,4 @@
-﻿
-namespace MC.PersistanceInterfaces
+﻿namespace MC.PersistanceInterfaces
 {
     public interface IRepository<TEntity, TKey>
     {
