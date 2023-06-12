@@ -14,9 +14,8 @@ namespace MC.Domain
         public Guid DirectorId { get; set; }
         public Director Director { get; set; }
 
-        [JsonIgnore]
-        public IEnumerable<MoviesActors> Actors { get; set;}
-        public IEnumerable<MoviesRates> Rates { get; set;}
+        public List<MoviesActors> Actors { get; set; } = new List<MoviesActors>();
+        public IEnumerable<MoviesRates> Rates { get; set;} = new List<MoviesRates>();
 
     }
 }

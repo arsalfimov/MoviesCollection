@@ -17,5 +17,6 @@ namespace MC.Services.DTOs
         public Guid DirectorId { get; set; }
 
         //public IEnumerable<MoviesActors> Actors { get; set; }
+        public Guid[] Actors { get; set; }
     }
 }

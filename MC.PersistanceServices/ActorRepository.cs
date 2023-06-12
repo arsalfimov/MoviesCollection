@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MC.PersistanceServices
 {
-    public class ActorRepository : IRepository<Actor, Guid>
+    public class ActorRepository : IActorsRepository
     {
         private readonly MovieDbContext _context;
 
@@ -43,6 +43,11 @@ namespace MC.PersistanceServices
             var actor = await GetByIdAsync(id);
             _context.Actors.Remove(actor);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Actor>> GetActorsByIds(Guid[] ids)
+        {
+            return await _context.Actors.Where(a => ids.Contains(a.Id)).ToListAsync();
         }
     }
 }

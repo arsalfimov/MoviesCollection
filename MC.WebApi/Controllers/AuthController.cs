@@ -3,6 +3,9 @@ using MC.WebApi.DTO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MC.WebApi.Services;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MC.WebApi.Controllers;
 
@@ -43,7 +46,7 @@ public class AuthController : ControllerBase
         {
             ModelState.AddModelError(error.Code, error.Description);
         }
-        return BadRequest(ModelState);   
+        return BadRequest(ModelState);
     }
 
     [HttpPost]
@@ -77,5 +80,14 @@ public class AuthController : ControllerBase
             Email = managedUser.Email,
             Token = accessToken,
         });
+
+    }
+
+    [Authorize]
+    [HttpGet("/GetMyId")]
+    public async Task<ActionResult> GetUserId()
+    {
+        var id = User.FindFirst("UserId").Value;
+        return Ok(id);
     }
 }

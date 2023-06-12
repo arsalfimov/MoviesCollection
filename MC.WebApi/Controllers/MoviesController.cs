@@ -18,9 +18,10 @@ namespace MC.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Movie>>> GetAllMovies()
+        public async Task<ActionResult<List<Movie>>> GetAllMovies(BrowseMovieDto dto)
         {
-            var movies = await _movieService.GetAllMoviesAsync();
+
+            var movies = await _movieService.GetAllMoviesAsync(dto);
             return Ok(movies);
         }
 
@@ -45,11 +46,32 @@ namespace MC.WebApi.Controllers
             return Ok(movie);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}/remove")]
         public async Task<IActionResult> DeleteMovie(Guid id)
         {
             await _movieService.DeleteMovieAsync(id);
             return Ok();
+        }
+
+        [HttpDelete("{movieId}/actor/{actorId}/remove")]
+        public async Task<IActionResult> RemoveMovieActor(Guid movieId, Guid actorId)
+        {
+            await _movieService.RemoveMovieActorAsync(movieId, actorId);
+            return Ok();
+        }
+
+        [HttpDelete("/{movieId}/actors/remove")]
+        public async Task<IActionResult> RemoveMovieActors(Guid movieId, [FromBody] List<Guid> actorIds)
+        {
+            try
+            {
+                await _movieService.RemoveMovieActorsAsync(movieId, actorIds);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
     }
 }

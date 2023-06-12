@@ -8,10 +8,10 @@ namespace MC.Services
 {
     public class ActorService : IActorsService
     {
-        private readonly IRepository<Actor, Guid> _actorRepository;
+        private readonly IActorsRepository _actorRepository;
         private readonly IMapper _mapper;
 
-        public ActorService(IRepository<Actor, Guid> repository, IMapper mapper)
+        public ActorService(IActorsRepository repository, IMapper mapper)
         {
             _actorRepository = repository;
             _mapper = mapper;

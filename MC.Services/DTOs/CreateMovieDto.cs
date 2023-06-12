@@ -14,5 +14,12 @@ namespace MC.Services.DTOs
         public string Genre { get; set; } = null!;
         public string Cover { get; set; }
         public Guid DirectorId { get; set; }
+        public Guid[] Actors { get; set; }
+        public List<CreateMovieRateDto> Rates { get; set; } = new List<CreateMovieRateDto>();
+    }
+    public class CreateMovieRateDto
+    {
+        public string UserId { get; set; }
+        public int Rate { get; set; }
     }
 }

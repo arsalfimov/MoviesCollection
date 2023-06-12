@@ -119,22 +119,13 @@ namespace MC.PersistanceServices.Migrations
 
             modelBuilder.Entity("MC.Domain.MoviesActors", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("ActorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("MovieId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("ActorId");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
+                    b.HasKey("ActorId", "MovieId");
 
                     b.HasIndex("MovieId");
 

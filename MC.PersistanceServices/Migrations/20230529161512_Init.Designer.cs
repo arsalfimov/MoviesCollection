@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MC.PersistanceServices.Migrations
 {
     [DbContext(typeof(MovieDbContext))]
-    [Migration("20230528204456_MigrationName6")]
-    partial class MigrationName6
+    [Migration("20230529161512_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -122,22 +122,13 @@ namespace MC.PersistanceServices.Migrations
 
             modelBuilder.Entity("MC.Domain.MoviesActors", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("ActorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("MovieId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("ActorId");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
+                    b.HasKey("ActorId", "MovieId");
 
                     b.HasIndex("MovieId");
 

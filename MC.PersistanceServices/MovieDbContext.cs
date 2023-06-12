@@ -22,8 +22,6 @@ namespace MC.PersistanceServices
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<MoviesActors>().HasKey(a => new { a.ActorId, a.MovieId });
-            modelBuilder.Entity<MoviesActors>().HasKey(a => a.Id);
-            modelBuilder.Entity<MoviesActors>().HasIndex(a => a.Id).IsUnique(true);
             modelBuilder.Entity<MoviesRates>().HasKey(a => new { a.MovieId, a.UserId });
         }
 

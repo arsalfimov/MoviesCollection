@@ -11,6 +11,7 @@ using System.Text;
 using MC.WebApi.Services;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,16 +54,18 @@ builder.Services
     })
     .AddEntityFrameworkStores<MovieDbContext>();
 
-builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<IRepository<Movie, Guid>, MovieRepository>();
+builder.Services.AddControllersWithViews().AddJsonOptions(o => 
+{
+    o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    o.JsonSerializerOptions.MaxDepth = 0;
+});
+
+builder.Services.AddScoped<IMoviesRepository, MovieRepository>();
 builder.Services.AddScoped<IRepository<Director, Guid>, DirectorRepository>();
-builder.Services.AddScoped<IRepository<Actor, Guid>, ActorRepository>();
-builder.Services.AddScoped<IRepository<MoviesActors, Guid>, MoviesActorsRepository>();
-builder.Services.AddScoped<IGetEnumerable<MoviesActors, Guid>, MoviesActorsRepository>();
+builder.Services.AddScoped<IActorsRepository, ActorRepository>();
 builder.Services.AddScoped<IMoviesService, MovieService>();
 builder.Services.AddScoped<IDirectorsService, DirectorService>();
 builder.Services.AddScoped<IActorsService, ActorService>();
-builder.Services.AddScoped<IMoviesActorsService, MoviesActorsService>();
 builder.Services.AddScoped<TokenProvider, TokenProvider>();
 
 builder.Services.AddSwaggerGen(option =>

@@ -14,9 +14,8 @@ namespace MC.Services
         public MappingProfile()
         {
             CreateMap<CreateDirectorDto, Director>();
-            CreateMap<CreateMovieDto, Movie>();
-            CreateMap<CreateActorDto, Actor>();
-            CreateMap<CreateMoviesActorsDto, MoviesActors>();
+            CreateMap<CreateMovieDto, Movie>().ForMember(m=> m.Actors, opt => opt.Ignore());
+            CreateMap<CreateMovieRateDto, MoviesRates>();
         }
     }
 }

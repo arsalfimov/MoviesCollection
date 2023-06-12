@@ -67,7 +67,7 @@ namespace MC.PersistanceServices.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Director",
+                name: "Directors",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -79,7 +79,7 @@ namespace MC.PersistanceServices.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Director", x => x.Id);
+                    table.PrimaryKey("PK_Directors", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -197,16 +197,16 @@ namespace MC.PersistanceServices.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
                     Genre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Cover = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    Cover = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DirectorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Movies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Movies_Director_DirectorId",
+                        name: "FK_Movies_Directors_DirectorId",
                         column: x => x.DirectorId,
-                        principalTable: "Director",
+                        principalTable: "Directors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -352,7 +352,7 @@ namespace MC.PersistanceServices.Migrations
                 name: "Movies");
 
             migrationBuilder.DropTable(
-                name: "Director");
+                name: "Directors");
         }
     }
 }
